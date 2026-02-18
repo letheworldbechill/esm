@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  eam-cockpit:
+    build: .
+    container_name: eam-cockpit
+    restart: always
+    ports:
+      - "8100:8100"
+    env_file:
+      - .env
+    volumes:
+      - ./papers:/opt/eam-cockpit/papers:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8100/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
